@@ -225,7 +225,7 @@ function createD3SvgObject(data, mean, divName, title, threshhold) {
         .attr("x", x(mean) + 2)
         .attr("y", y(yMax) + 10)
         .text("Mean: " + mean)
-        .style("font-size", "8px")
+        .style("font-size", "14px")
 
 
     // Add X axis label:
@@ -234,7 +234,7 @@ function createD3SvgObject(data, mean, divName, title, threshhold) {
         .attr("x", width/2)
         .attr("y", height + margin.bottom/1.25)
         .text("Count of " + title)
-        .style("font-size", "9px")
+        .style("font-size", "14px")
         .style("font-weight", "bold");
 
     // Y axis label:
@@ -244,7 +244,7 @@ function createD3SvgObject(data, mean, divName, title, threshhold) {
         .attr("x", (height/2))
         .attr("transform", "rotate(90)")
         .text("Probability")
-        .style("font-size", "10px")
+        .style("font-size", "14px")
         .style("font-weight", "bold");
 
     svg
@@ -252,8 +252,9 @@ function createD3SvgObject(data, mean, divName, title, threshhold) {
         .attr("class", "title")
         .attr("x", width / 2) //positions it at the middle of the width
         .attr("y", -margin.top / 3) //positions it from the top by the margin top
-        .attr("font-family", "'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive")
+        .attr("font-family", "'Arial Nova',Arial, 'Helvetica Neue', Helvetica, sans-serif")
         .attr("fill", "black")
         .attr("text-anchor", "middle")
+        .style("font-weight", "bold")
         .text(title);
 }
