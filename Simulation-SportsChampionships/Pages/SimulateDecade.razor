@@ -42,13 +42,13 @@
     </article>
     <article class="main1">
         <p>
-            <div class="g-predictionTable">
+            <div class="g-predictionTable" style="margin-top:10px;">
                 <table>
                     <thead>
                         <tr>
-                            <th class="g-prediction-header">Count of Playoff Appearances</th>
-                            <th>Probability - Playoff Appearances</th>
-                            <th>Probability - At Least Amount of Playoff Appearances</th>
+                            <th class="g-prediction-header">Playoff Appearance</th>
+                            <th>Probability Appearances</th>
+                            <th>Least Prob. App.</th>
                         </tr>
                     </thead>
                     @foreach (var numberOfEvents in Enumerable.Range(0, 11))
@@ -91,9 +91,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="g-prediction-header">Count of Championships Won</th>
-                            <th>Probability - Championships Won</th>
-                            <th>Probability - At Least Amount of Championships Won</th>
+                            <th class="g-prediction-header">Championships</th>
+                            <th>Probability Win</th>
+                            <th>Probability Least Won</th>
                         </tr>
                     </thead>
                     @foreach (var numberOfEvents in Enumerable.Range(0, 11))
