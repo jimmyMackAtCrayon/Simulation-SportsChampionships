@@ -30,7 +30,7 @@ function updateD3Histogram(rowInnerText, divName) {
     var bar = svg
         .selectAll("rect")
         .style("fill", function (d) {
-            if (d.x0 < threshhold) { return "orange" } else { return "lightgreen" }
+            if (d.x0 < threshhold) { return "#FF6A4C" } else { return "#094E5D" }
         });
 }
 
@@ -180,7 +180,7 @@ function createD3SvgObject(data, mean, divName, title, threshhold) {
             return 0;
         })
         .style("fill", function (d) {
-            if (d.x0 < mean) { return "orange" } else { return "lightgreen" }
+            if (d.x0 < mean) { return "#FF6A4C" } else { return "#094E5D" }
             //return colorScale(d.length)
         });
 
