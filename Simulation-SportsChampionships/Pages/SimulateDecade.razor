@@ -3,7 +3,7 @@
 
 <div class="wrapper">
     <header class="header">
-        <h1>Header</h1>
+        <h3>Sports League Simulator - Monte Carlo Simulation in Blazor WASM</h3>
     </header>
     <article class="main1">
         <p>
@@ -34,7 +34,24 @@
     </article>
 
     <aside class="aside aside1">
-        <h1>Aside1</h1>
+        <p>
+            <h6><b>Choose a decade to simulate:</b></h6>
+
+            <select @onchange="@SelectedDecadeChanged">
+                <option value="NBA1960s-East">NBA (East Division): 1959 - 1969 (10 Years)</option>
+                <option value="NBA1960s-West">NBA (West Division): 1959 - 1969 (10 Years)</option>
+                <option value="NBA2010s">NBA: 2011 - 2021 (10 Years)</option>
+                <option value="NFL1970s">NFL: 1970 - 1980 (10 Years)</option>
+                <option value="NFL2010s">NFL: 2011 - 2021 (10 Years)</option>
+            </select>
+        </p>
+        <p>
+            <input id="numberOfSimulationsInput" type="range" min="100" max="10000" step="100" style="width:80%;"
+                   value="@this.NumberOfSimulations" @onchange="@OnNumberOfSimulationsUpdated" oninput="numberOfSimulationsOutput.value=numberOfSimulationsInput.value" />
+            <output name="numberOfSimulationsOutput" id="numberOfSimulationsOutput" for="numberOfSimulationsInput">@this.NumberOfSimulations</output>
+
+            <button class="btnx" @onclick="SimulateSportsDecade">Re-Simulate Decade</button>
+        </p>
     </aside>
   
 </div>
