@@ -42,13 +42,13 @@
     </article>
     <article class="main1">
         <p>
-            <div class="g-predictionTable" style="margin-top:10px;">
+            <div class="g-predictionTable" style="padding-top:10px; ">
                 <table>
                     <thead>
-                        <tr>
-                            <th class="g-prediction-header">Playoff Appearance</th>
-                            <th>Probability Appearances</th>
-                            <th>Least Prob. App.</th>
+                        <tr style="background-color:#094E5D;color:white;border-width:1px;">
+                            <th class="centerIt">Playoff Appearance</th>
+                            <th class="centerIt">Probability Appearances</th>
+                            <th class="centerIt">Least Prob. App.</th>
                         </tr>
                     </thead>
                     @foreach (var numberOfEvents in Enumerable.Range(0, 11))
@@ -58,10 +58,10 @@
                         var maxPlayoffsMade = this.playoffsCount!.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
                         var playoffsCountMean = Math.Round(this.playoffsCount.Average(), 2, MidpointRounding.AwayFromZero);
 
-                        var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row-bold" : "g-prediction-row";
+                        var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row" : "g-prediction-row-off";
 
                         <tr class="@predictionRowStyle" onmouseenter='tablemouseoverPlayoffs()'>
-                            <td class="g-seasonNumber">@numberOfEvents</td>
+                            <td class="@predictionRowStyle">@numberOfEvents</td>
                             <td>@FormatProbability(Decimal.Divide(countOfPlayoffsMade, NumberOfSimulations))</td>
                             <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfPlayoffsMadeUpTo), NumberOfSimulations))</td>
                         </tr>
@@ -87,13 +87,13 @@
     </article>
     <article class="main1">
         <p>
-            <div class="g-predictionTable">
+            <div class="g-predictionTable" style="padding-top:10px; ">
                 <table>
                     <thead>
-                        <tr>
-                            <th class="g-prediction-header">Championships</th>
-                            <th>Probability Win</th>
-                            <th>Probability Least Won</th>
+                        <tr style="background-color:#094E5D;color:white;border-width:1px;">
+                            <th class="centerIt">Championships Won</th>
+                            <th class="centerIt">Probability Win</th>
+                            <th class="centerIt">Probability Least Amt. Won</th>
                         </tr>
                     </thead>
                     @foreach (var numberOfEvents in Enumerable.Range(0, 11))
@@ -101,10 +101,10 @@
                         var countOfChampionships = this.championshipsCount.Where(a => a == numberOfEvents).Count();
                         var countOfChampionshipsUpTo = this.championshipsCount.Where(a => a <= numberOfEvents).Count();
                         var maxChampionShips = this.championshipsCount.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
-                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row-bold" : "g-prediction-row";
+                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row" : "g-prediction-row-off";
 
                         <tr class="@predictionRowStyle" onmouseenter='tablemouseoverChampionships()'>
-                            <td class="g-seasonNumber">@numberOfEvents </td>
+                            <td class="@predictionRowStyle">@numberOfEvents </td>
                             <td>@FormatProbability(Decimal.Divide(countOfChampionships, NumberOfSimulations))</td>
                             <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfChampionshipsUpTo), NumberOfSimulations))</td>
                         </tr>

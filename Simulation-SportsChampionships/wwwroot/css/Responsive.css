@@ -12,6 +12,7 @@
     }
 body{
     background-color:#F1F2ED;
+    color: #094E5D;
 }
 .header {
     background-color: #E6E4D9;
@@ -46,6 +47,12 @@ body{
     border-radius:5px;
     color:white;
     margin-top:10px;
+}
+.centerIt {
+    text-align: center;
+    border: solid;
+    border-color: white;
+    border-width: 1px;
 }
 
 

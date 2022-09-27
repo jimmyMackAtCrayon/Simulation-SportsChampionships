@@ -246,11 +246,16 @@ td {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-
 .g-prediction-row {
-    /*    color: #000;
-    background: hsl(204, 26%, 94%);*/
+    color: #094E5D;
+    background-color: #CCD0D2;
 }
+
+.g-prediction-row-off {
+    color: #094E5D;
+    background-color: #E7E9EA;
+}
+
 
 .g-prediction-row-bold {
     font-weight: bold;
@@ -278,7 +283,9 @@ td {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
+    
 }
+
 
 .g-seasonNumber {
     color: #000;
