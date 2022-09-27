@@ -1,7 +1,146 @@
 ﻿@page "/SimulateDecade"
 @inject IJSRuntime JSRuntime
 
-<label>Choose a sport decade to simulate:</label>
+<div class="wrapper">
+    <header class="header">
+        <h2>Sports League Simulator - Monte Carlo Simulation in Blazor WASM</h2>
+
+    </header>
+
+    <article class="main">
+        <p class="params">
+            Choose a decade to simulate:
+
+            <select @onchange="@SelectedDecadeChanged">
+                <option value="NBA1960s-East">NBA (East Division): 1959 - 1969 (10 Years)</option>
+                <option value="NBA1960s-West">NBA (West Division): 1959 - 1969 (10 Years)</option>
+                <option value="NBA2010s">NBA: 2011 - 2021 (10 Years)</option>
+                <option value="NFL1970s">NFL: 1970 - 1980 (10 Years)</option>
+                <option value="NFL2010s">NFL: 2011 - 2021 (10 Years)</option>
+            </select>
+
+        
+
+        
+
+            <input id="numberOfSimulationsInput" type="range" class="" min="100" max="10000" step="100"
+                   value="@this.NumberOfSimulations" @onchange="@OnNumberOfSimulationsUpdated" oninput="numberOfSimulationsOutput.value=numberOfSimulationsInput.value" />
+            <output name="numberOfSimulationsOutput" id="numberOfSimulationsOutput" for="numberOfSimulationsInput">@this.NumberOfSimulations</output>
+
+            <button class="btn btn-primary px-2 p-1 mt-2 mb-2" @onclick="SimulateSportsDecade">Re-Simulate Decade</button>
+        
+            </p>
+    </article>
+
+    <article class="main">
+        <div class="@cardDetailsStylePlayoffAppearances">
+            <h5>Predictions - Playoff Appearances</h5>
+            <div class="g-predictionRow">
+                <div style="width: 400px;">
+                    <div class="g-predictionChart">
+                        <!-- Create a div where the graph will take place -->
+                        <div id="dataVizPlayoffs" style="max-width: 370px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article class="main">
+        <div class="@cardDetailsStylePlayoffAppearances">
+            <div style="flex: 1;">
+                <div class="g-predictionTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="g-prediction-header">Count of Playoff Appearances</th>
+                                <th>Probability - Playoff Appearances</th>
+                                <th>Probability - At Least Amount of Playoff Appearances</th>
+                            </tr>
+                        </thead>
+                        @foreach (var numberOfEvents in Enumerable.Range(0, 11))
+                        {
+                            var countOfPlayoffsMade = this.playoffsCount.Where(a => a == numberOfEvents).Count();
+                            var countOfPlayoffsMadeUpTo = this.playoffsCount.Where(a => a <= numberOfEvents).Count();
+                            var maxPlayoffsMade = this.playoffsCount!.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
+                            var playoffsCountMean = Math.Round(this.playoffsCount.Average(), 2, MidpointRounding.AwayFromZero);
+
+                            var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row-bold" : "g-prediction-row";
+
+                            <tr class="@predictionRowStyle" onmouseenter='tablemouseoverPlayoffs()'>
+                                <td class="g-seasonNumber">@numberOfEvents</td>
+                                <td>@FormatProbability(Decimal.Divide(countOfPlayoffsMade, NumberOfSimulations))</td>
+                                <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfPlayoffsMadeUpTo), NumberOfSimulations))</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </article>
+
+    <article class="main">
+        <div class="@cardDetailsStyleChampionships">
+            <h5>Predictions - ChampionShips Won</h5>
+            <div class="g-predictionRow">
+                <div style="width: 400px;">
+                    <div class="g-predictionChart">
+                        <!-- Create a div where the graph will take place -->
+                        <div id="dataVizChampionships" style="max-width: 370px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article class="main">
+        <div style="flex: 1;">
+            <div class="g-predictionTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="g-prediction-header">Count of Championships Won</th>
+                            <th>Probability - Championships Won</th>
+                            <th>Probability - At Least Amount of Championships Won</th>
+                        </tr>
+                    </thead>
+                    @foreach (var numberOfEvents in Enumerable.Range(0, 11))
+                    {
+                        var countOfChampionships = this.championshipsCount.Where(a => a == numberOfEvents).Count();
+                        var countOfChampionshipsUpTo = this.championshipsCount.Where(a => a <= numberOfEvents).Count();
+                        var maxChampionShips = this.championshipsCount.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
+                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row-bold" : "g-prediction-row";
+
+                        <tr class="@predictionRowStyle" onmouseenter='tablemouseoverChampionships()'>
+                            <td class="g-seasonNumber">@numberOfEvents </td>
+                            <td>@FormatProbability(Decimal.Divide(countOfChampionships, NumberOfSimulations))</td>
+                            <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfChampionshipsUpTo), NumberOfSimulations))</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+    </article>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<label>Choose a sport decade to simulate:</label>
 <select @onchange="@SelectedDecadeChanged">
   <option value="NBA1960s-East">NBA (East Division): 1959 - 1969 (10 Years)</option>
   <option value="NBA1960s-West">NBA (West Division): 1959 - 1969 (10 Years)</option>
@@ -115,7 +254,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @code {
     public string SportsDecade { get; set; } = "NBA1960s-East";
@@ -170,7 +309,7 @@
 
     private void OnNumberOfSimulationsUpdated(ChangeEventArgs e)
     {
-        if (int.TryParse((string) e.Value!, out var index) && index >= 0)
+        if (int.TryParse((string)e.Value!, out var index) && index >= 0)
         {
             this.NumberOfSimulations = index;
             this.SimulateSportsDecade();
