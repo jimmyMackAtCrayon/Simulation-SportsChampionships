@@ -57,13 +57,12 @@
                         var countOfPlayoffsMadeUpTo = this.playoffsCount.Where(a => a <= numberOfEvents).Count();
                         var maxPlayoffsMade = this.playoffsCount!.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
                         var playoffsCountMean = Math.Round(this.playoffsCount.Average(), 2, MidpointRounding.AwayFromZero);
-
-                        var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row" : "g-prediction-row-off";
+                        var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row-bold" : "g-prediction-row";
 
                         <tr class="@predictionRowStyle" onmouseenter='tablemouseoverPlayoffs()'>
-                            <td class="@predictionRowStyle">@numberOfEvents</td>
-                            <td>@FormatProbability(Decimal.Divide(countOfPlayoffsMade, NumberOfSimulations))</td>
-                            <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfPlayoffsMadeUpTo), NumberOfSimulations))</td>
+                            <td class="g-seasonNumber" style="background-color:#E7E9EA;">@numberOfEvents</td>
+                            <td style="color: #094E5D;">@FormatProbability(Decimal.Divide(countOfPlayoffsMade, NumberOfSimulations))</td>
+                            <td style="color: #094E5D;">@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfPlayoffsMadeUpTo), NumberOfSimulations))</td>
                         </tr>
                     }
                 </table>
@@ -96,17 +95,21 @@
                             <th class="centerIt">Probability Least Amt. Won</th>
                         </tr>
                     </thead>
+                    @{
+                        var idjdm = 0;
+                    }
                     @foreach (var numberOfEvents in Enumerable.Range(0, 11))
                     {
+                       
                         var countOfChampionships = this.championshipsCount.Where(a => a == numberOfEvents).Count();
                         var countOfChampionshipsUpTo = this.championshipsCount.Where(a => a <= numberOfEvents).Count();
                         var maxChampionShips = this.championshipsCount.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
-                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row" : "g-prediction-row-off";
-
-                        <tr class="@predictionRowStyle" onmouseenter='tablemouseoverChampionships()'>
-                            <td class="@predictionRowStyle">@numberOfEvents </td>
-                            <td>@FormatProbability(Decimal.Divide(countOfChampionships, NumberOfSimulations))</td>
-                            <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfChampionshipsUpTo), NumberOfSimulations))</td>
+                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row-bold" : "g-prediction-row";
+                       
+                        <tr id=tableRow class="@predictionRowStyle" onmouseenter='tablemouseoverChampionships(); '>
+                            <td class="g-seasonNumber" style="background-color:#E7E9EA;">@numberOfEvents </td>
+                            <td style="color: #094E5D;">@FormatProbability(Decimal.Divide(countOfChampionships, NumberOfSimulations))</td>
+                            <td style="color: #094E5D;">@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfChampionshipsUpTo), NumberOfSimulations))</td>
                         </tr>
                     }
                 </table>
@@ -117,106 +120,6 @@
   
 </div>
 
-@*
-<div class="wrapper">
-   
-
-    <article class="articles">
-        <div class="@cardDetailsStylePlayoffAppearances">
-            <h5>Predictions - Playoff Appearances</h5>
-            <div class="g-predictionRow">
-                <div style="width: 400px;">
-                    <div class="g-predictionChart">
-                        <!-- Create a div where the graph will take place -->
-                        <div id="dataVizPlayoffs" style="max-width: 370px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="articles">
-        <div class="@cardDetailsStylePlayoffAppearances">
-            <div style="flex: 1;">
-                <div class="g-predictionTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="g-prediction-header">Count of Playoff Appearances</th>
-                                <th>Probability - Playoff Appearances</th>
-                                <th>Probability - At Least Amount of Playoff Appearances</th>
-                            </tr>
-                        </thead>
-                        @foreach (var numberOfEvents in Enumerable.Range(0, 11))
-                        {
-                            var countOfPlayoffsMade = this.playoffsCount.Where(a => a == numberOfEvents).Count();
-                            var countOfPlayoffsMadeUpTo = this.playoffsCount.Where(a => a <= numberOfEvents).Count();
-                            var maxPlayoffsMade = this.playoffsCount!.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
-                            var playoffsCountMean = Math.Round(this.playoffsCount.Average(), 2, MidpointRounding.AwayFromZero);
-
-                            var predictionRowStyle = (countOfPlayoffsMade == maxPlayoffsMade) ? "g-prediction-row-bold" : "g-prediction-row";
-
-                            <tr class="@predictionRowStyle" onmouseenter='tablemouseoverPlayoffs()'>
-                                <td class="g-seasonNumber">@numberOfEvents</td>
-                                <td>@FormatProbability(Decimal.Divide(countOfPlayoffsMade, NumberOfSimulations))</td>
-                                <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfPlayoffsMadeUpTo), NumberOfSimulations))</td>
-                            </tr>
-                        }
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-    </article>
-
-    <article class="articles">
-        <div class="@cardDetailsStyleChampionships">
-            <h5>Predictions - ChampionShips Won</h5>
-            <div class="g-predictionRow">
-                <div style="width: 400px;">
-                    <div class="g-predictionChart">
-                        <!-- Create a div where the graph will take place -->
-                        <div id="dataVizChampionships" style="max-width: 370px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="articles">
-        <div style="flex: 1;">
-            <div class="g-predictionTable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="g-prediction-header">Count of Championships Won</th>
-                            <th>Probability - Championships Won</th>
-                            <th>Probability - At Least Amount of Championships Won</th>
-                        </tr>
-                    </thead>
-                    @foreach (var numberOfEvents in Enumerable.Range(0, 11))
-                    {
-                        var countOfChampionships = this.championshipsCount.Where(a => a == numberOfEvents).Count();
-                        var countOfChampionshipsUpTo = this.championshipsCount.Where(a => a <= numberOfEvents).Count();
-                        var maxChampionShips = this.championshipsCount.GroupBy(a => a).OrderByDescending(b => b.Count()).FirstOrDefault().Count();
-                        var predictionRowStyle = (countOfChampionships == maxChampionShips) ? "g-prediction-row-bold" : "g-prediction-row";
-
-                        <tr class="@predictionRowStyle" onmouseenter='tablemouseoverChampionships()'>
-                            <td class="g-seasonNumber">@numberOfEvents </td>
-                            <td>@FormatProbability(Decimal.Divide(countOfChampionships, NumberOfSimulations))</td>
-                            <td>@FormatProbability(Decimal.Divide((NumberOfSimulations - countOfChampionshipsUpTo), NumberOfSimulations))</td>
-                        </tr>
-                    }
-                </table>
-            </div>
-        </div>
-
-    </article>
-
-
-
-</div>*@
 
 
 @code {

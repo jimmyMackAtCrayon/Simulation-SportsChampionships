@@ -230,14 +230,14 @@ table {
 
 .g-prediction-true {
     font-weight: bold;
-    color: black;
+    color: #094E5D;
     font-size: 12px;
     line-height: 12px;
 }
 
 td {
     padding: 0 4px 0 8px;
-    border-bottom: solid 1px #dedede;
+    border: solid 1px #dedede;
 }
 
 .g-predictionRow {
@@ -258,15 +258,18 @@ td {
 
 
 .g-prediction-row-bold {
-    font-weight: bold;
+    font-weight: bold;    
+    background-color: #CCD0D2;
 }
 
 .g-prediction-row:hover {
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
+    background-color: #FF6A4C;
 }
 
 .g-prediction-row-bold:hover {
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
+    background-color: #FF6A4C;
 }
 
 .g-predictionChart {
@@ -288,8 +291,8 @@ td {
 
 
 .g-seasonNumber {
-    color: #000;
-    background: hsl(204, 26%, 94%);
+    color: #094E5D;
+    background-color: #CCD0D2;
     min-width: 100px;
     text-align: left;
 }
